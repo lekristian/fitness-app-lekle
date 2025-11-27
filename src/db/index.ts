@@ -3,6 +3,7 @@ import { Sequelize } from "sequelize";
 
 import defineExercise from "./models/exercise";
 import defineProgram from "./models/program";
+import defineUser from "./models/user";
 
 const sequelize: Sequelize = new Sequelize(
   `postgresql://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
@@ -17,10 +18,12 @@ sequelize
 
 const Exercise = defineExercise(sequelize, "exercise");
 const Program = defineProgram(sequelize, "program");
+const User = defineUser(sequelize, "user");
 
 const models = {
   Exercise,
   Program,
+  User,
 };
 type Models = typeof models;
 

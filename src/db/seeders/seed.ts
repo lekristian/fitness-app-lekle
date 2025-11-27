@@ -1,11 +1,33 @@
 import "dotenv/config";
-import { models, sequelize } from "./db/index";
-import { EXERCISE_DIFFICULTY } from "./utils/enums";
+import { USER_ROLE } from "../models/user";
+import { models, sequelize } from "..";
+import { EXERCISE_DIFFICULTY } from "../../utils/enums";
 
-const { Exercise, Program } = models;
+const { Exercise, Program, User } = models;
 
 const seedDB = async () => {
   await sequelize.sync({ force: true });
+
+  await User.bulkCreate([
+    {
+      name: "Admin",
+      surname: "User",
+      nickName: "admin",
+      email: "admin@fitness.com",
+      password: "admin123",
+      age: 30,
+      role: USER_ROLE.ADMIN,
+    },
+    {
+      name: "Regular",
+      surname: "User",
+      nickName: "user",
+      email: "user@fitness.com",
+      password: "user123",
+      age: 25,
+      role: USER_ROLE.USER,
+    },
+  ]);
 
   await Program.bulkCreate([
     {
