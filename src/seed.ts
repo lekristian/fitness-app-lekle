@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { models, sequelize } from "./db/index";
 import { EXERCISE_DIFFICULTY } from "./utils/enums";
 

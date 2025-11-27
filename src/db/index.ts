@@ -1,11 +1,11 @@
 import fs from "fs";
 import { Sequelize } from "sequelize";
 
-import defineExercise from "./exercise";
-import defineProgram from "./program";
+import defineExercise from "./models/exercise";
+import defineProgram from "./models/program";
 
 const sequelize: Sequelize = new Sequelize(
-  "postgresql://localhost:5432/fitness_app",
+  `postgresql://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
   {
     logging: false,
   }
@@ -25,9 +25,9 @@ const models = {
 type Models = typeof models;
 
 // check if every model is imported
-const modelsFiles = fs.readdirSync(__dirname);
-// -1 because index.ts can not be counted
-if (Object.keys(models).length !== modelsFiles.length - 1) {
+const modelsDir = `${__dirname}/models`;
+const modelsFiles = fs.existsSync(modelsDir) ? fs.readdirSync(modelsDir) : [];
+if (Object.keys(models).length !== modelsFiles.length) {
   throw new Error("You probably forgot import database model!");
 }
 
