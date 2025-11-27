@@ -1,5 +1,5 @@
-import path from "path";
-import dotenv from "dotenv";
+const path = require("path");
+const dotenv = require("dotenv");
 
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
@@ -11,7 +11,7 @@ const {
   DB_PORT = "5432",
 } = process.env;
 
-const config = {
+module.exports = {
   development: {
     username: DB_USERNAME,
     password: DB_PASSWORD === "" ? null : DB_PASSWORD,
@@ -21,5 +21,3 @@ const config = {
     dialect: "postgres",
   },
 };
-
-export = config;
