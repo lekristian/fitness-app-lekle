@@ -30,47 +30,7 @@
 - use proper commit messages
 - share your solution with us (link or read permissions for miroslava.filcakova@goodrequest.com)
 
-### You can
-
-- change project structure
-- change or add any npm module
-- change db model (add tables, table columns...)
-- change anything if you can say why
-
----
-
-## Scenario
-
-The goal of this assignement is to modify given REST API written in express.js using typescript. Public API consist of 2 endpoints `[get]` `localhost:8000/exercises` (list of exercises) and `[get]` `localhost:8000/programs` programs (list of programs).
-
-Structure of API responses
-
-```javascript
-{
-  data: {
-    id: 1;
-  }
-  message: "You have successfully created program";
-}
-```
-
-or
-
-```javascript
-{
-  data: [
-    {
-      id: 1,
-      name: "Program 1",
-    },
-  ];
-  message: "List of programs";
-}
-```
-
----
-
-## Task 1
+## Task 1 : Done
 
 Create authorization layer to enable users to access private API (next Task)
 
@@ -83,7 +43,7 @@ Create authorization layer to enable users to access private API (next Task)
 
 ---
 
-## Task 2
+## Task 2: Done
 
 Create private API for user with role [ADMIN]
 
@@ -95,7 +55,7 @@ ADMIN can:
 - get user detail
 - update any user (name, surname, nickName, age, nickName, role)
 
-## Task 3
+## Task 3: not finished
 
 ---
 
@@ -116,7 +76,7 @@ USER cannot:
 
 ---
 
-## Bonus task 1 - pagination, filter, search
+## Bonus task 1 - pagination, filter, search: not started
 
 Add pagination to exercise list using query => `/exercises?page=1&limit=10` return 1 page of exercises in maximal length of 10.
 
@@ -126,14 +86,14 @@ add fultext search on exercise name => `/exercises?search=cis` => return only ex
 
 ---
 
-## Bonus task 2 - validation
+## Bonus task 2 - validation: done
 
 Create validation service to check request body, query and params to make sure user sends valid request. For example, in registration, user must send valid email, otherwise return status code 400.
 Also you can use validation on query in bonus task 1.
 
 ---
 
-## Bonus task 3 - localization
+## Bonus task 3 - localization: not started
 
 Create localization service to send message attribute in API responses in correct language. Default language is EN, optional is SK. User can send all requests with HTTP header `language: 'sk'` or `language: 'en'` to receive required language localization.
 
@@ -150,7 +110,7 @@ example of response for request with `language: 'sk'`
 
 ---
 
-## Bonus task 4 - error handling
+## Bonus task 4 - error handling: done
 
 Create proper way how to handle all errors in application. Use console.error display error in terminal, user can never see stack trace or real error message. You can write error logs to file.
 
@@ -163,3 +123,17 @@ response status code >= 500
   message: "Something went wrong";
 }
 ```
+
+# TODOS:
+
+## Missing:
+
+- Task 3, USER role protected routes, I have prepared role.middleware where we can easily choose which routes USER role can use
+- Task 3, get own profile, I can easily read user data from token and select rest of the data from DB
+- Task 3, we have to introduce new table which will record exercises done by user {UserId, ExerciseId, duration, datetime} where records can be duplicated
+- Task 3, we can select those exercises from table mentioned above
+
+- expiresAt can be implemented
+- if there will be more roles we can migrate roles to the separate table, also support for multi-role role->roles
+- add swagger
+- find way to keep validations schemas and CRUD dtos in sync
