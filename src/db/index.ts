@@ -4,9 +4,10 @@ import { Sequelize } from "sequelize";
 import defineExercise from "./models/exercise";
 import defineProgram from "./models/program";
 import defineUser from "./models/user";
+import { config } from "../configs/env.config";
 
 const sequelize: Sequelize = new Sequelize(
-  `postgresql://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
+  `postgresql://${config.db.host}:${config.db.port}/${config.db.name}`,
   {
     logging: false,
   }
@@ -29,7 +30,11 @@ type Models = typeof models;
 
 // check if every model is imported
 const modelsDir = `${__dirname}/models`;
-const modelsFiles = fs.existsSync(modelsDir) ? fs.readdirSync(modelsDir) : [];
+const modelsFiles = fs.existsSync(modelsDir)
+  ? fs
+      .readdirSync(modelsDir)
+      .filter((file) => file.endsWith(".ts") && !file.startsWith("index"))
+  : [];
 if (Object.keys(models).length !== modelsFiles.length) {
   throw new Error("You probably forgot import database model!");
 }

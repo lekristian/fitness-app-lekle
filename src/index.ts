@@ -3,15 +3,17 @@ import http from "http";
 import express from "express";
 
 import { sequelize } from "./db";
-import ProgramRouter from "./routes/programs";
-import ExerciseRouter from "./routes/exercises";
+import router from "./routes/index.routes";
+import errorHandler from "./middlewares/errorHandler.middleware";
 
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use("/programs", ProgramRouter());
-app.use("/exercises", ExerciseRouter());
+app.use(router);
+
+// Global error handler - must be last
+app.use(errorHandler);
 
 const httpServer = http.createServer(app);
 

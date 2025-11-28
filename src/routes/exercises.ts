@@ -6,6 +6,7 @@ const router = Router();
 
 const { Exercise, Program } = models;
 
+//TODO: refactor to MVC, apply validation middleware and asyncHandler
 export default () => {
   router.get(
     "/",
