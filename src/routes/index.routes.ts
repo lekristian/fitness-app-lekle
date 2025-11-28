@@ -1,5 +1,5 @@
 import { Router } from "express";
-import ProgramRouter from "./programs";
+import ProgramRouter from "./program.routes";
 import AuthRouter from "./auth.routes";
 import ExerciseRouter from "./exercise.routes";
 

@@ -6,10 +6,16 @@ import { EXERCISE_DIFFICULTY } from "../../types/exercise/enums";
 export interface ExerciseModel extends Model {
   id: number;
   difficulty: EXERCISE_DIFFICULTY;
-  name: String;
-
+  name: string;
   program: ProgramModel;
 }
+
+export type CreateExerciseDto = Omit<
+  Omit<ExerciseModel, keyof Model>,
+  "id" | "program"
+> & { programID: number };
+
+export type UpdateExerciseDto = Partial<CreateExerciseDto>;
 
 export default (sequelize: Sequelize, modelName: string) => {
   const ExerciseModelCtor = sequelize.define<ExerciseModel>(
