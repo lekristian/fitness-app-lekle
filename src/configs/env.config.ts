@@ -8,6 +8,7 @@ export const validateEnv = () => {
   try {
     const envVars: EnvConfig = envSchema.parse(process.env);
     return {
+      BCRYPT_ROUNDS: Number(envVars.BCRYPT_ROUNDS),
       jwtConfig: {
         accessSecret: envVars.JWT_SECRET,
         refreshAccessSecret: envVars.JWT_REFRESH,

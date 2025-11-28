@@ -12,15 +12,12 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
-        allowNull: false
       },
       surname: {
         type: Sequelize.STRING,
-        allowNull: false
       },
       nickName: {
         type: Sequelize.STRING,
-        allowNull: false,
         unique: true
       },
       email: {
@@ -37,7 +34,6 @@ module.exports = {
       },
       age: {
         type: Sequelize.INTEGER,
-        allowNull: true
       },
       role: {
         type: Sequelize.ENUM('ADMIN', 'USER'),
