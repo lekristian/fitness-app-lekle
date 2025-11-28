@@ -1,9 +1,9 @@
-import express from "express";
+import { Router } from "express";
 import ProgramRouter from "./programs";
-import ExerciseRouter from "./exercises";
 import AuthRouter from "./auth.routes";
+import ExerciseRouter from "./exercise.routes";
 
-const router = express.Router();
+const router = Router();
 
 router.use("/programs", ProgramRouter());
 router.use("/exercises", ExerciseRouter());
