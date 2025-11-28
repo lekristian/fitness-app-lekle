@@ -1,13 +1,15 @@
-import { Router, Request, Response, NextFunction } from "express";
-
-import { models } from "../db";
+import { Router } from "express";
 import { ProgramController } from "../controllers/program.controller";
 import expressAsyncHandler from "express-async-handler";
 import { JwtAuth } from "../middlewares/authJwt.middleware";
+import validateSchema from "../middlewares/validationSchema.middleware";
+import {
+  addExerciseToProgramSchema,
+  removeExerciseFromProgramSchema,
+} from "../db/schemas/program.schema";
 
 const router = Router();
 
-const { Program } = models;
 const programController = new ProgramController();
 
 router.get(
@@ -16,11 +18,24 @@ router.get(
   expressAsyncHandler(programController.findAllPrograms)
 );
 
-// TODO: Add validation middleware for :id param
 router.get(
   "/:id",
   JwtAuth,
   expressAsyncHandler(programController.findProgramById)
+);
+
+router.post(
+  "/:id/exercises",
+  JwtAuth,
+  validateSchema(addExerciseToProgramSchema),
+  expressAsyncHandler(programController.addExerciseToProgram)
+);
+
+router.delete(
+  "/:id/exercises/:exerciseId",
+  JwtAuth,
+  validateSchema(removeExerciseFromProgramSchema),
+  expressAsyncHandler(programController.removeExerciseFromProgram)
 );
 
 export default () => router;

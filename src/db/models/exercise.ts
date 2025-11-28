@@ -7,7 +7,8 @@ export interface ExerciseModel extends Model {
   id: number;
   difficulty: EXERCISE_DIFFICULTY;
   name: string;
-  program: ProgramModel;
+  programID: number;
+  program?: ProgramModel;
 }
 
 export type CreateExerciseDto = Omit<
@@ -32,6 +33,15 @@ export default (sequelize: Sequelize, modelName: string) => {
       },
       name: {
         type: DataTypes.STRING(200),
+      },
+      programID: {
+        type: DataTypes.BIGINT,
+        allowNull: false,
+        references: {
+          model: "programs",
+          key: "id",
+        },
+        onDelete: "CASCADE",
       },
     },
     {

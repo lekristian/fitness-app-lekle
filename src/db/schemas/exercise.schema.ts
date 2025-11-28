@@ -7,7 +7,7 @@ export const createExerciseSchema = z.object({
     difficulty: z.enum(EXERCISE_DIFFICULTY, {
       message: "Invalid difficulty level",
     }),
-    programID: z
+    programID: z.coerce
       .number()
       .int()
       .positive("Program ID must be a positive integer"),
@@ -25,7 +25,7 @@ export const updateExerciseSchema = z.object({
         message: "Invalid difficulty level",
       })
       .optional(),
-    programID: z
+    programID: z.coerce
       .number()
       .int()
       .positive("Program ID must be a positive integer")

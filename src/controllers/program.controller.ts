@@ -3,6 +3,10 @@ import { ProgramService } from "../services/program.service";
 import InternalServerError from "../adapters/errors/internalServer.error";
 import { ErrorCode } from "../adapters/errors/custom.errors";
 import ForbiddenError from "../adapters/errors/forbidden.error";
+import {
+  addExerciseToProgramSchema,
+  createProgramSchema,
+} from "../db/schemas/program.schema";
 
 export class ProgramController {
   private programService = new ProgramService();
@@ -42,6 +46,60 @@ export class ProgramController {
     } catch (error) {
       throw new InternalServerError(
         "Failed to retrieve program: " + (error as Error),
+        ErrorCode.INTERNAL_SERVER
+      );
+    }
+  };
+
+  addExerciseToProgram = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const validationResult = addExerciseToProgramSchema.parse(req);
+
+      const { exerciseId } = validationResult.body;
+
+      console.log("Adding exercise to program:", { programId: id, exerciseId });
+      const program = await this.programService.addExerciseToProgram(
+        Number(id),
+        exerciseId
+      );
+
+      res.status(200).json({
+        success: true,
+        data: program,
+        message: "Exercise added to program successfully",
+      });
+    } catch (error) {
+      if (error instanceof ForbiddenError) {
+        throw error;
+      }
+      throw new InternalServerError(
+        "Failed to add exercise to program: " + (error as Error).message,
+        ErrorCode.INTERNAL_SERVER
+      );
+    }
+  };
+
+  removeExerciseFromProgram = async (req: Request, res: Response) => {
+    try {
+      const { id, exerciseId } = req.params;
+
+      const program = await this.programService.removeExerciseFromProgram(
+        Number(id),
+        Number(exerciseId)
+      );
+
+      res.status(200).json({
+        success: true,
+        data: program,
+        message: "Exercise removed from program successfully",
+      });
+    } catch (error) {
+      if (error instanceof ForbiddenError) {
+        throw error;
+      }
+      throw new InternalServerError(
+        "Failed to remove exercise from program: " + (error as Error).message,
         ErrorCode.INTERNAL_SERVER
       );
     }
