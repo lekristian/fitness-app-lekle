@@ -48,7 +48,7 @@ export class ExerciseService {
     }
   }
 
-  findAllExercises = async () =>
+  findAllExercisesHandler = async () =>
     await this.exerciseRepository.findAll({
       include: [
         {
@@ -57,13 +57,13 @@ export class ExerciseService {
       ],
     });
 
-  createExercise = async (data: CreateExerciseDto) => {
+  createExerciseHandler = async (data: CreateExerciseDto) => {
     await this.validateProgramAndUniqueness(data.programID, data.name);
 
     return await this.exerciseRepository.create(data as any);
   };
 
-  updateExercise = async (id: number, data: UpdateExerciseDto) => {
+  updateExerciseHandler = async (id: number, data: UpdateExerciseDto) => {
     const exercise = await this.exerciseRepository.findByPk(id);
     if (!exercise) {
       return null;
@@ -80,7 +80,7 @@ export class ExerciseService {
     return exercise;
   };
 
-  deleteExercise = async (id: number) => {
+  deleteExerciseHandler = async (id: number) => {
     const exercise = await this.exerciseRepository.findByPk(id);
     if (!exercise) {
       return false;

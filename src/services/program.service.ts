@@ -24,13 +24,10 @@ export class ProgramService {
       },
     });
 
-    console.log("Fetched exercise:", exercise);
-
     if (!exercise && shouldBelongToProgram) {
       throw new ForbiddenError("Exercise not found", ErrorCode.NOT_FOUND);
     }
 
-    console.log("1");
     if (
       !shouldBelongToProgram &&
       Number(exercise.programID) === currentProgramId
@@ -45,7 +42,7 @@ export class ProgramService {
     return exercise;
   }
 
-  findAllPrograms = async () =>
+  findAllProgramsHandler = async () =>
     await this.programRepository.findAll({
       include: [
         {
@@ -54,7 +51,7 @@ export class ProgramService {
       ],
     });
 
-  findProgramById = async (id: number) =>
+  findProgramByIdHandler = async (id: number) =>
     await this.programRepository.findByPk(id, {
       include: [
         {
@@ -63,17 +60,23 @@ export class ProgramService {
       ],
     });
 
-  addExerciseToProgram = async (programId: number, exerciseId: number) => {
+  addExerciseToProgramHandler = async (
+    programId: number,
+    exerciseId: number
+  ) => {
     const exercise = await this.getExerciseOrThrow(exerciseId, programId);
     await exercise.update({ programID: programId });
 
-    return await this.findProgramById(programId);
+    return await this.findProgramByIdHandler(programId);
   };
 
-  removeExerciseFromProgram = async (programId: number, exerciseId: number) => {
+  removeExerciseFromProgramHandler = async (
+    programId: number,
+    exerciseId: number
+  ) => {
     const exercise = await this.getExerciseOrThrow(exerciseId, programId, true);
     await exercise.destroy();
 
-    return await this.findProgramById(programId);
+    return await this.findProgramByIdHandler(programId);
   };
 }

@@ -13,7 +13,7 @@ export class ExerciseController {
 
   findAllExercises = async (req: Request, res: Response) => {
     try {
-      const exercises = await this.exerciseService.findAllExercises();
+      const exercises = await this.exerciseService.findAllExercisesHandler();
 
       res.status(200).json({
         success: true,
@@ -35,7 +35,7 @@ export class ExerciseController {
 
       const { name, difficulty, programID } = validationResult.body;
 
-      const exercise = await this.exerciseService.createExercise({
+      const exercise = await this.exerciseService.createExerciseHandler({
         name,
         difficulty,
         programID,
@@ -61,11 +61,14 @@ export class ExerciseController {
       const validationResult = updateExerciseSchema.parse(req);
       const { name, difficulty, programID } = validationResult.body;
 
-      const exercise = await this.exerciseService.updateExercise(parseInt(id), {
-        name,
-        difficulty,
-        programID,
-      });
+      const exercise = await this.exerciseService.updateExerciseHandler(
+        parseInt(id),
+        {
+          name,
+          difficulty,
+          programID,
+        }
+      );
 
       if (!exercise) {
         throw new ForbiddenError("Exercise not found", ErrorCode.NOT_FOUND);
@@ -88,7 +91,9 @@ export class ExerciseController {
     try {
       const { id } = req.params;
 
-      const exercise = await this.exerciseService.deleteExercise(parseInt(id));
+      const exercise = await this.exerciseService.deleteExerciseHandler(
+        parseInt(id)
+      );
 
       if (!exercise) {
         throw new ForbiddenError("Exercise not found", ErrorCode.NOT_FOUND);

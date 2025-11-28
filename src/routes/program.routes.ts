@@ -7,6 +7,8 @@ import {
   addExerciseToProgramSchema,
   removeExerciseFromProgramSchema,
 } from "../db/schemas/program.schema";
+import { authorizeRoles } from "../middlewares/role.middleware";
+import { USER_ROLE } from "../db/models/user";
 
 const router = Router();
 
@@ -27,13 +29,17 @@ router.get(
 router.post(
   "/:id/exercises",
   JwtAuth,
+  authorizeRoles([USER_ROLE.ADMIN]),
+
   validateSchema(addExerciseToProgramSchema),
+
   expressAsyncHandler(programController.addExerciseToProgram)
 );
 
 router.delete(
   "/:id/exercises/:exerciseId",
   JwtAuth,
+  authorizeRoles([USER_ROLE.ADMIN]),
   validateSchema(removeExerciseFromProgramSchema),
   expressAsyncHandler(programController.removeExerciseFromProgram)
 );

@@ -16,7 +16,7 @@ const router = Router();
 const exerciseController = new ExerciseController();
 
 router.get(
-  "/getAll",
+  "/",
   JwtAuth,
   authorizeRoles([USER_ROLE.ADMIN]),
   expressAsyncHandler(exerciseController.findAllExercises)
@@ -24,25 +24,25 @@ router.get(
 
 router.post(
   "/",
-  validateSchema(createExerciseSchema),
   JwtAuth,
   authorizeRoles([USER_ROLE.ADMIN]),
+  validateSchema(createExerciseSchema),
   expressAsyncHandler(exerciseController.createExercise)
 );
 
 router.put(
   "/:id",
-  validateSchema(updateExerciseSchema),
   JwtAuth,
   authorizeRoles([USER_ROLE.ADMIN]),
+  validateSchema(updateExerciseSchema),
   expressAsyncHandler(exerciseController.updateExercise)
 );
 
 router.delete(
   "/:id",
-  validateSchema(deleteExerciseSchema),
   JwtAuth,
   authorizeRoles([USER_ROLE.ADMIN]),
+  validateSchema(deleteExerciseSchema),
   expressAsyncHandler(exerciseController.deleteExercise)
 );
 
