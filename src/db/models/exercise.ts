@@ -1,7 +1,7 @@
 import { Sequelize, DataTypes, Model } from "sequelize";
 
 import { ProgramModel } from "./program";
-import { EXERCISE_DIFFICULTY } from "../../utils/enums";
+import { EXERCISE_DIFFICULTY } from "../../types/exercise/enums";
 
 export interface ExerciseModel extends Model {
   id: number;

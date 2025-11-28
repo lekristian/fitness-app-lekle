@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { USER_ROLE } from "../models/user";
 import { models, sequelize } from "..";
-import { EXERCISE_DIFFICULTY } from "../../utils/enums";
+import { EXERCISE_DIFFICULTY } from "../../types/exercise/enums";
 
 const { Exercise, Program, User } = models;
 

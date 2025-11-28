@@ -4,6 +4,7 @@ import { Sequelize } from "sequelize";
 import defineExercise from "./models/exercise";
 import defineProgram from "./models/program";
 import defineUser from "./models/user";
+import defineToken from "./models/token";
 import { config } from "../configs/env.config";
 
 const sequelize: Sequelize = new Sequelize(
@@ -20,11 +21,13 @@ sequelize
 const Exercise = defineExercise(sequelize, "exercise");
 const Program = defineProgram(sequelize, "program");
 const User = defineUser(sequelize, "user");
+const Token = defineToken(sequelize, "token");
 
 const models = {
   Exercise,
   Program,
   User,
+  Token,
 };
 type Models = typeof models;
 
